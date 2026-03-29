@@ -8,6 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import MapEmbed from "@/components/ui/mapembed";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Form,
@@ -125,10 +126,8 @@ export default function Contact() {
                   </div>
                 </div>
 
-                {/* Map Placeholder */}
-                <div className="mt-10 h-48 bg-gray-100 rounded-md border border-gray-200 flex flex-col items-center justify-center text-gray-400">
-                  <MapPin className="h-8 w-8 mb-2 opacity-50" />
-                  <span className="font-bold text-sm uppercase tracking-wide">{contactContent.info.mapPlaceholder}</span>
+                <div className="mt-10 rounded-md border border-gray-200 overflow-hidden">
+                  <MapEmbed />
                 </div>
               </CardContent>
             </Card>

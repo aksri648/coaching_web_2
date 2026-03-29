@@ -13,7 +13,7 @@ export const navbarTickerItems = [
   "Admissions Open 2025-26",
   "JEE Advanced Batch Results: 95 selections",
   "NEET Batch Results: 120 selections",
-  "Register for Scholarship Test Now!",
+  // "Register for Scholarship Test Now!",
 ] as const;
 
 export const footerContent = {
@@ -25,18 +25,18 @@ export const footerContent = {
     { label: "Our Faculty", href: "/faculty" },
     { label: "Past Results", href: "/results" },
     { label: "Contact Us", href: "/contact" },
-    { label: "Careers", href: "#" },
+    // { label: "Careers", href: "#" },
   ],
   programs: [
     { label: "JEE Main & Advanced", href: "/courses" },
     { label: "NEET UG Pre-Medical", href: "/courses" },
     { label: "Foundation (Class 8-10)", href: "/courses" },
-    { label: "Crash Courses", href: "/courses" },
-    { label: "Distance Learning", href: "/courses" },
+    // { label: "Crash Courses", href: "/courses" },
+    // { label: "Distance Learning", href: "/courses" },
   ],
   contact: {
     address: "123 Academic Block, Education Hub, New Delhi, India 110016",
-    phone: "+91 1800-123-4567",
+    phone: "+91 1800-123-4568",
     email: "admissions@brightpath.edu",
   },
   legalLinks: [
@@ -223,6 +223,7 @@ export const resultsContent = {
       ["2024", "124", "456", "342"],
       ["2023", "108", "398", "289"],
       ["2022", "92", "345", "210"],
+      ["2022", "92", "345", "210"],
     ],
   },
 } as const;
@@ -378,6 +379,14 @@ export const mockData = {
     {
       id: "f4",
       name: "Dr. Sneha Patel",
+      subject: "Biology",
+      qualification: "MBBS, AIIMS Delhi",
+      experience: "10+ Years",
+      imageUrl: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=400&fit=crop",
+    },
+    {
+      id: "f5",
+      name: "Dr. Sumita Patel",
       subject: "Biology",
       qualification: "MBBS, AIIMS Delhi",
       experience: "10+ Years",

@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { useLocation } from "wouter";
 import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
+import CallButton from "@/components/callbutton-whatsappbutton/callbutton";
+import WhatsAppButton from "@/components/callbutton-whatsappbutton/whatsappbtn";
 
 export function PageLayout({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
@@ -18,6 +20,8 @@ export function PageLayout({ children }: { children: React.ReactNode }) {
         {children}
       </main>
       <Footer />
+      <CallButton />
+      <WhatsAppButton />
     </div>
   );
 }

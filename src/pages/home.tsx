@@ -348,7 +348,7 @@ export default function Home() {
                 transition={{ type: "spring", stiffness: 260, damping: 18 }}
                 className="relative overflow-hidden bg-white border border-gray-100 p-8 rounded-lg shadow-md hover:shadow-2xl transition-all duration-300 group"
               >
-                <div className="absolute left-0 top-0 h-1 w-full origin-left scale-x-0 bg-blue-600 transition-transform duration-300 group-hover:scale-x-100" />
+                <div className="absolute left-0 top-0 h-1 w-full origin-left scale-x-0 bg-accent transition-transform duration-700 group-hover:scale-x-100" />
                 <div className="h-14 w-14 bg-primary/5 rounded-full flex items-center justify-center mb-6 text-primary transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6">
                   <FeatureIcon className="h-7 w-7" />
                 </div>

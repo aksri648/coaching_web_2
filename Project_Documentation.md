@@ -181,3 +181,88 @@ From the project folder (`/home/akshat/Pictures/iteration2`):
 ## 10. Suggested Next Improvement
 
 To simplify maintenance, move all editable content (stats, hero copy, timeline, footer info, filters, table rows, testimonials, etc.) into one or more centralized config/data files (for example `src/content/site-content.ts`) and keep pages purely presentational.
+
+## 11. Recent UI/UX Enhancements (Iteration 2)
+
+### Contact Page - Map Integration
+- **File**: `src/pages/contact.tsx`
+- **Change**: Replaced placeholder map area with functional `MapEmbed` component
+- **Details**: 
+  - Imports `MapEmbed` from `src/components/ui/mapembed.tsx`
+  - Displays embedded Google Map of Austria Business Center
+  - Responsive iframe with lazy loading and referrer policy
+
+### Global Floating Action Buttons
+- **File**: `src/components/layout/PageLayout.tsx`
+- **Change**: Added call and WhatsApp buttons to global layout
+- **Details**:
+  - Call button: Fixed at `bottom-100px, right-30px` (navy blue with yellow border)
+  - WhatsApp button: Fixed at `bottom-30px, right-30px` (green)
+  - Both buttons appear on every page and persist on scroll
+  - Responsive adjustments for mobile devices
+  - Components: `src/components/callbutton-whatsappbutton/callbutton.jsx` and `whatsappbtn.jsx`
+
+### Courses Page - Demo Pricing
+- **File**: `src/pages/courses.tsx`
+- **Change**: Added demo pricing display to course cards
+- **Details**:
+  - Shows bold rupee (₹) symbol with price centered above Enroll button
+  - Pricing mapped by category:
+    - JEE: ₹1,29,999
+    - NEET: ₹1,19,999
+    - Foundation: ₹79,999
+  - Positioned at card bottom, text color primary
+
+### Home Page - Why Choose Us Card Enhancements
+- **File**: `src/pages/home.tsx`
+- **Changes**:
+  1. **Hover Animation**: Cards lift up 8px with 1.02x scale on hover
+     - Spring transition for smooth, bouncy motion
+  2. **Progress Bar**: 
+     - Animated blue bar at top-edge of each card
+     - Changed to orange (accent color)
+     - Animation duration slowed to 700ms (from 300ms)
+     - Expands left-to-right on hover
+  3. **Shadow Enhancement**: 
+     - Base shadow: `shadow-md` (upgraded from `shadow-sm`)
+     - Hover shadow: `shadow-2xl` (upgraded from `shadow-xl`)
+  4. **Icon Hover Effect**: 
+     - Icon scales and rotates slightly on card hover
+     - Transition duration 300ms
+
+### About Page - Mission & Vision Cards
+- **File**: `src/pages/about.tsx`
+- **Changes**:
+  1. **Background Color**:
+     - Both cards now use light navy (`bg-slate-700`)
+     - Previously: Mission was white, Vision was primary blue
+     - Border color: `border-slate-600`
+  2. **Text Colors**: 
+     - All text now white/white with opacity for consistency
+     - Icon circle background: `bg-white/10`
+  3. **Hover Animation**:
+     - Lift effect: -8px on Y-axis
+     - Scale: 1.02x
+     - Spring transition for smooth motion
+     - Shadow upgrade on hover: `hover:shadow-2xl`
+     - Cursor changes to pointer
+
+## 12. Component Files Added/Modified
+
+### New Components
+- `src/components/callbutton-whatsappbutton/callbutton.jsx` - Call button component
+- `src/components/callbutton-whatsappbutton/whatsappbtn.jsx` - WhatsApp button component
+- `src/components/callbutton-whatsappbutton/callbutton.css` - Call button styles
+- `src/components/callbutton-whatsappbutton/whatsappbtn.css` - WhatsApp button styles
+
+### Modified Components
+- `src/pages/contact.tsx` - Map integration
+- `src/components/layout/PageLayout.tsx` - Global button mounting
+- `src/pages/courses.tsx` - Pricing display
+- `src/pages/home.tsx` - Why Choose Us animations and styling
+- `src/pages/about.tsx` - Mission/Vision card styling and animations
+
+## 13. Import Path Notes
+
+- Uses path alias `@/` for imports (configured in `tsconfig.json`)
+- All component imports follow the alias pattern for consistency

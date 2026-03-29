@@ -60,14 +60,17 @@ export default function About() {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
+            whileHover={{ y: -8, scale: 1.02 }}
+            transition={{ type: "spring", stiffness: 260, damping: 18 }}
             viewport={{ once: true }}
+            className="cursor-pointer"
           >
-            <Card className="h-full border border-gray-200 shadow-xl bg-white rounded-lg p-10 text-center flex flex-col items-center">
-              <div className="w-20 h-20 bg-primary/5 rounded-full flex items-center justify-center mb-6">
-                <Target className="h-10 w-10 text-primary" />
+            <Card className="h-full border border-slate-600 shadow-xl bg-slate-700 rounded-lg p-10 text-center flex flex-col items-center transition-all duration-300 hover:shadow-2xl">
+              <div className="w-20 h-20 bg-white/10 rounded-full flex items-center justify-center mb-6">
+                <Target className="h-10 w-10 text-accent" />
               </div>
-              <h2 className="text-3xl font-display font-bold text-gray-900 mb-4">{aboutContent.mission.title}</h2>
-              <p className="text-gray-600 leading-relaxed text-lg font-medium">
+              <h2 className="text-3xl font-display font-bold text-white mb-4">{aboutContent.mission.title}</h2>
+              <p className="text-white/80 leading-relaxed text-lg font-medium">
                 {aboutContent.mission.text}
               </p>
             </Card>
@@ -77,10 +80,12 @@ export default function About() {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
+            whileHover={{ y: -8, scale: 1.02 }}
+            transition={{ type: "spring", stiffness: 260, damping: 18, delay: 0.2 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
+            className="cursor-pointer"
           >
-            <Card className="h-full border border-accent bg-primary text-white shadow-xl rounded-lg p-10 text-center flex flex-col items-center">
+            <Card className="h-full border border-slate-600 bg-slate-700 text-white shadow-xl rounded-lg p-10 text-center flex flex-col items-center transition-all duration-300 hover:shadow-2xl">
               <div className="w-20 h-20 bg-white/10 rounded-full flex items-center justify-center mb-6">
                 <Eye className="h-10 w-10 text-accent" />
               </div>

@@ -13,6 +13,11 @@ export default function Courses() {
   const [, setLocation] = useLocation();
   const { data: courses, isLoading } = useCourses();
   const [activeTab, setActiveTab] = useState("All");
+  const demoPriceByCategory: Record<string, string> = {
+    JEE: "1,29,999",
+    NEET: "1,19,999",
+    Foundation: "79,999",
+  };
 
   const filteredCourses = courses?.filter(
     c => activeTab === "All" || c.category === activeTab
@@ -122,9 +127,13 @@ export default function Courses() {
                         ))}
                       </div>
 
+                      <div className="mt-auto mb-3 text-center">
+                        <p className="text-2xl font-black text-primary">₹ {demoPriceByCategory[course.category] ?? "99,999"}</p>
+                      </div>
+
                       <Button 
                         onClick={() => setLocation(`/contact?course=${course.id}`)}
-                        className="w-full h-12 rounded-md text-base font-bold bg-primary hover:bg-primary/90 text-white transition-all shadow-md mt-auto"
+                        className="w-full h-12 rounded-md text-base font-bold bg-primary hover:bg-primary/90 text-white transition-all shadow-md"
                       >
                         Enroll Now
                       </Button>

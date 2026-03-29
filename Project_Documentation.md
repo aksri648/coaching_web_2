@@ -1,12 +1,12 @@
-# Project Documentation (iteration2)
+# Project Documentation (iteration3)
 
 ## 1. Project Summary
 
-`iteration2` is a **frontend-only** React + Vite web app for a coaching institute website.
+`iteration3` is a **frontend-only** React + Vite web app for a coaching institute website.
 
 - No backend server
 - No database
-- No API integration
+- Contact form integrates with Web3Forms API
 - All content/data is currently hardcoded in frontend files
 
 The app is a standalone frontend clone of the main coaching site with local mock data.
@@ -26,14 +26,14 @@ The app is a standalone frontend clone of the main coaching site with local mock
 
 ## 3. Folder Structure
 
-- `iteration2/src/main.tsx`: app bootstrap
-- `iteration2/src/App.tsx`: route configuration and layout mounting
-- `iteration2/src/index.css`: global styling and utility styles
-- `iteration2/src/components/layout/`: shared layout parts
+- `src/main.tsx`: app bootstrap
+- `src/App.tsx`: route configuration and layout mounting
+- `src/index.css`: global styling and utility styles
+- `src/components/layout/`: shared layout parts
   - `Navbar.tsx`
   - `Footer.tsx`
   - `PageLayout.tsx`
-- `iteration2/src/pages/`: all page views
+- `src/pages/`: all page views
   - `home.tsx`
   - `about.tsx`
   - `courses.tsx`
@@ -41,8 +41,8 @@ The app is a standalone frontend clone of the main coaching site with local mock
   - `faculty.tsx`
   - `contact.tsx`
   - `not-found.tsx`
-- `iteration2/src/hooks/use-coaching-data.ts`: all mock datasets + mock query/mutation hooks
-- `iteration2/public/images/`: static local hero/campus images
+- `src/hooks/use-coaching-data.ts`: all mock datasets + mock query/mutation hooks
+- `public/images/`: static local hero/campus images
 
 ## 4. Routing
 
@@ -141,7 +141,7 @@ Hardcoded in component:
 - Program dropdown options
 - Placeholder map area text
 
-Form submit is mock-only via `useSubmitContact()` in `use-coaching-data.ts`.
+Form submit is handled directly in `contact.tsx` via Web3Forms.
 
 ### Navbar and Footer
 Files:
@@ -164,7 +164,7 @@ These are local images used by Home/About hero sections.
 
 ## 8. Build and Run
 
-From the project folder (`/home/akshat/Pictures/iteration2`):
+From the project folder (`/home/akshat/Pictures/iteration3`):
 
 - Install dependencies: `npm install`
 - Dev: `npm run dev`
@@ -176,13 +176,14 @@ From the project folder (`/home/akshat/Pictures/iteration2`):
 
 - Content is fragmented across multiple files (not fully centralized)
 - No CMS or backend-driven content
-- Contact submission is simulated only
+- Contact submission depends on valid Web3Forms key and internet connectivity
+- Contact form phone field enforces +91 country code with 10-digit numeric validation
 
 ## 10. Suggested Next Improvement
 
 To simplify maintenance, move all editable content (stats, hero copy, timeline, footer info, filters, table rows, testimonials, etc.) into one or more centralized config/data files (for example `src/content/site-content.ts`) and keep pages purely presentational.
 
-## 11. Recent UI/UX Enhancements (Iteration 2)
+## 11. Recent UI/UX Enhancements (Iteration 2 & 3)
 
 ### Contact Page - Map Integration
 - **File**: `src/pages/contact.tsx`
@@ -247,7 +248,157 @@ To simplify maintenance, move all editable content (stats, hero copy, timeline, 
      - Shadow upgrade on hover: `hover:shadow-2xl`
      - Cursor changes to pointer
 
-## 12. Component Files Added/Modified
+## 12. Contact Form Integration (Iteration 3 - Web3Forms)
+
+### Overview
+- **File**: `src/pages/contact.tsx`
+- **Submission Method**: Direct POST to Web3Forms API
+- **Status**: Fully functional with production-ready API key
+
+### Form Fields & Validation
+
+#### Name
+- **Type**: Text input
+- **Validation**: Minimum 2 characters required
+- **Placeholder**: "John Doe"
+
+#### Email
+- **Type**: Email input
+- **Validation**: Valid email format required
+- **Placeholder**: "john@example.com"
+
+#### Phone Number
+- **Type**: Numeric input with country code prefix
+- **Country Code**: Fixed +91 (India) - non-editable visual prefix
+- **Input Restriction**: Exactly 10 digits, numeric only
+- **Validation**: Regex pattern: `/^\d{10}$/`
+- **Placeholder**: "9876543210"
+- **Submission**: Sent as `+91XXXXXXXXXX` (country code + 10 digits)
+- **UI Features**:
+  - Fixed +91 prefix displayed in left side of input box
+  - Input strips all non-numeric characters automatically
+  - Enforces max 10 digits
+  - Mobile-optimized with `inputMode="numeric"` and `type="tel"`
+
+#### Interested Program
+- **Type**: Dropdown select
+- **Options**: 
+  - JEE Main & Advanced
+  - NEET UG
+  - Foundation (Class 8-10)
+  - Crash Course
+- **Validation**: Selection required
+
+#### Message / Questions
+- **Type**: Textarea
+- **Validation**: Minimum 10 characters required
+- **Placeholder**: "Tell us about your current class, goals, and any specific queries..."
+- **Size**: Minimum height 150px, non-resizable
+
+### Web3Forms API Integration
+
+#### Endpoint
+- **URL**: `https://api.web3forms.com/submit`
+- **Method**: POST
+- **Content-Type**: application/json
+
+#### API Key
+- **Key**: `d25919e7-9351-4f9c-92f8-694b0eaf3597`
+- **Location**: Hardcoded in `src/pages/contact.tsx` as `WEB3FORMS_ACCESS_KEY`
+- **Recipient Email**: Configured in Web3Forms dashboard for this key
+
+#### Payload Structure
+```json
+{
+  "access_key": "d25919e7-9351-4f9c-92f8-694b0eaf3597",
+  "subject": "New Contact Inquiry - BrightPath",
+  "from_name": "BrightPath Website",
+  "replyto": "[user-email]",
+  "name": "[user-name]",
+  "email": "[user-email]",
+  "phone": "+91[10-digit-number]",
+  "course": "[selected-program]",
+  "message": "[user-message]",
+  "botcheck": ""
+}
+```
+
+### Success State (5-Second Auto-Dismiss)
+
+#### Visual Feedback
+- **Card Background**: Light green (`bg-green-50`)
+- **Border**: Light green (`border-green-200`)
+- **Icon**: Green checkmark circle from Lucide React
+- **Position**: Below submit button, full form width
+- **Animation**: Slide-down entrance with fade-in (Framer Motion)
+
+#### Content
+- **Title**: "Inquiry submitted successfully" (bold green text)
+- **Subtitle**: "We received your details and will contact you shortly." (smaller green text)
+
+#### Progress Bar
+- **Location**: Bottom edge of success card
+- **Initial Width**: 100%
+- **Final Width**: 0%
+- **Duration**: 5000 milliseconds (5 seconds)
+- **Color**: Green (`bg-green-500`)
+- **Animation**: Smooth linear transition (`ease-linear`)
+- **Trigger**: Auto-dismisses card when bar reaches 0%
+
+#### Form Reset
+- All form fields clear on successful submission
+- User can immediately submit another inquiry if desired
+
+### Error Handling
+- **Toast Notification**: Destructive toast displayed on submission failure
+- **Error Cases**:
+  - Network errors
+  - Invalid API key
+  - Web3Forms API rejection
+  - Missing/invalid response from server
+- **Toast Content**: Server message or fallback: "Something went wrong. Please try again."
+- **Button State**: Disabled during submission, re-enables on success/error
+
+### Form State Management
+- **isSubmitting**: Boolean flag for button disabled state
+- **showSuccessCard**: Boolean flag for success card visibility
+- **successProgress**: Numeric value (0-100) for progress bar width
+- **Form Reset**: Handled via React Hook Form's `form.reset()` method
+
+### Layout Improvements
+- **Card Height**: Removed forced full-height constraint (`h-full`) to eliminate excess whitespace below button
+- **Responsive Grid**: Form card naturally adjusts height to content
+- **Spacing**: Form content area uses `space-y-6` for consistent field-to-field gaps
+- **Button Size**: Full width, 56px height, prominent styling
+
+## 13. Contact Page Enhancements Summary
+
+### Web3Forms & Enhanced UX (Iteration 3)
+- **File**: `src/pages/contact.tsx`
+- **Changes**:
+  1. **Web3Forms Integration**:
+     - Replaced mock submission with live Web3Forms API call
+     - Form data now delivered to configured inbox
+     - API key: `d25919e7-9351-4f9c-92f8-694b0eaf3597`
+  2. **Phone Field Enhancement**:
+     - Fixed +91 country code prefix (non-editable)
+     - 10-digit numeric input only
+     - Automatic digit-only filtering
+     - Mobile-optimized with proper `inputMode`
+  3. **Success Card with Progress Bar**:
+     - Green card appears below form on success
+     - Animated green progress bar depletes over 5 seconds
+     - Card auto-hides when bar reaches 0%
+     - Form automatically resets
+  4. **Error Handling**:
+     - Destructive toast on submission failure
+     - User-friendly error messages
+  5. **Layout Fix**:
+     - Removed forced full-height on card container
+     - Eliminates excessive whitespace below submit button
+     - Card now wraps content naturally
+
+## 14. Component Files Added/Modified
 
 ### New Components
 - `src/components/callbutton-whatsappbutton/callbutton.jsx` - Call button component
@@ -262,7 +413,44 @@ To simplify maintenance, move all editable content (stats, hero copy, timeline, 
 - `src/pages/home.tsx` - Why Choose Us animations and styling
 - `src/pages/about.tsx` - Mission/Vision card styling and animations
 
-## 13. Import Path Notes
+## 15. Import Path Notes
 
 - Uses path alias `@/` for imports (configured in `tsconfig.json`)
 - All component imports follow the alias pattern for consistency
+
+## 14. Contact Form Setup (Web3Forms)
+
+### Integration Location
+- File: `src/pages/contact.tsx`
+- Form submission is implemented directly inside the page component.
+
+### Endpoint
+- `POST https://api.web3forms.com/submit`
+
+### API Key Configuration
+- The key is currently hardcoded in `contact.tsx` as:
+  - `const WEB3FORMS_ACCESS_KEY = "DUMMY_WEB3FORMS_KEY_REPLACE_ME";`
+- Replace this dummy value with your actual Web3Forms access key.
+
+### Payload Fields Sent
+- `access_key`
+- `subject`
+- `from_name`
+- `replyto`
+- `name`
+- `email`
+- `phone`
+- `course`
+- `message`
+- `botcheck`
+
+### Success UX
+- On successful submission:
+  - Form resets
+  - A green success card appears below the form
+  - A green progress bar at the bottom of the card animates from 100% to 0%
+  - Card auto-hides after 5 seconds
+
+### Error UX
+- On failed submission:
+  - A destructive toast is displayed with the server or fallback error message

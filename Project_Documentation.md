@@ -454,3 +454,51 @@ To simplify maintenance, move all editable content (stats, hero copy, timeline, 
 ### Error UX
 - On failed submission:
   - A destructive toast is displayed with the server or fallback error message
+
+## 16. Cloudflare Deployment (Current Working Setup)
+
+This project is currently deployed using **Cloudflare Workers Static Assets (Wrangler)** with Vite build output.
+
+### Deployment Mode
+- Build tool: Vite
+- Output directory: `dist`
+- Deploy tool: Wrangler (`npx wrangler deploy`)
+- Wrangler config file: `wrangler.toml`
+
+### Wrangler Configuration
+Current `wrangler.toml`:
+
+```toml
+name = "coachingweb"
+compatibility_date = "2026-03-30"
+
+[assets]
+directory = "./dist"
+not_found_handling = "single-page-application"
+```
+
+### Why This Setup Is Required
+- The app uses client-side routing (Wouter).
+- SPA fallback is handled via `assets.not_found_handling = "single-page-application"`.
+- A catch-all `_redirects` rule (`/* /index.html 200`) was removed because Wrangler validation reported an infinite-loop redirect error (`code: 10021`).
+
+### Deployment Commands
+From project root:
+
+```bash
+npm install
+npm run build
+npx wrangler deploy
+```
+
+### Local Validation Commands
+Use this before production deployment:
+
+```bash
+npm run build
+npx wrangler deploy --dry-run
+```
+
+### Notes
+- `public/_redirects` is intentionally not used for SPA fallback in this deployment mode.
+- If you rename the Worker project in Cloudflare, update `name` in `wrangler.toml` accordingly.
